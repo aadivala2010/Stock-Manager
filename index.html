@@ -337,6 +337,7 @@
                 
                 try {
                     watchlist.forEach(s => previousPrices.set(s.symbol, s.price));
+                portfolio.forEach(p => previousPrices.set(p.symbol, p.currentPrice ?? p.buyPrice));
                     
                     const updated = await stockApi.refreshMultiple(symbols, skipCache);
                     const priceMap = new Map(updated.map(u => [u.symbol, u]));
@@ -376,7 +377,7 @@
                 portfolio.forEach(p => {
                     const qty = p.quantity || 0;
                     const buy = p.buyPrice || 0;
-                    const curr = p.currentPrice || buy;
+                    const curr = p.currentPrice ?? buy;
                     totalCost += buy * qty;
                     totalValue += curr * qty;
                 });
@@ -442,7 +443,7 @@
             function renderWatchlistCard(stock, index) {
                 const prev = previousPrices.get(stock.symbol) ?? stock.price;
                 const change = stock.price - stock.previousPrice;
-                const changePercent = (change / stock.previousPrice) * 100;
+                const changePercent = stock.previousPrice ? (change / stock.previousPrice) * 100 : 0;
                 const direction = stock.price > prev ? 'up' : stock.price < prev ? 'down' : 'neutral';
                 const priceClass = direction === 'up' ? 'price-up' : direction === 'down' ? 'price-down' : 'price-neutral';
                 return `
@@ -503,7 +504,7 @@
                 return `
                     <div class="glass-card rounded-xl sm:rounded-2xl p-3 sm:p-4 relative group fade-in" data-port-idx="${index}">
                         <button onclick="window.handleRemovePortfolio('${item.symbol}')" class="remove-button absolute top-2 right-2 sm:top-3 sm:right-3 opacity-0 group-hover:opacity-100 transition p-1 sm:p-1.5 rounded-full hover:bg-gray-100/50">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
                         </button>
                         <div class="pr-4 sm:pr-5">
                             <h3 class="font-semibold text-gray-900 truncate text-sm sm:text-base">${item.name}</h3>
@@ -551,7 +552,7 @@
                 `;
             }
 
-            function renderFooter() { return ''; }
+            function renderFooter() { return ""; }
 
             function renderModal() {
                 const isWatch = modal.type === 'watchlist';
