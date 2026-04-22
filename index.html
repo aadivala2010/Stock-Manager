@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Stock Manager</title>
+    <title>Multi Asset Manager</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* price colors & animations */
         .price-up { color: #16a34a; }
         .price-down { color: #dc2626; }
         .price-neutral { color: #111827; }
@@ -26,7 +25,6 @@
         @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
         .shake { animation: shake 0.3s ease-in-out; }
         
-        /* glass styles */
         .glass-header {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
@@ -95,7 +93,6 @@
         .remove-button:hover svg { stroke: #ef4444; transform: scale(1.1); }
         * { -webkit-font-smoothing: antialiased; }
         
-        /* column layout */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -126,7 +123,6 @@
             border: 1px solid rgba(255,255,255,0.6);
         }
 
-        /* Remove number input spinners */
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button {
             -webkit-appearance: none;
@@ -138,118 +134,43 @@
             appearance: textfield;
         }
 
-        /* Mobile optimizations */
         @media (max-width: 640px) {
-            body { 
-                padding: 0.75rem; 
-            }
-            
-            .cards-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.625rem;
-            }
-            
-            .glass-card, .glass-empty {
-                aspect-ratio: 1 / 1;
-                min-height: auto;
-                height: auto;
-                padding: 0.875rem;
-            }
-            
-            .glass-card .text-2xl {
-                font-size: 1.25rem;
-            }
-            
-            .glass-card .text-sm {
-                font-size: 0.7rem;
-            }
-            
-            .glass-card h3 {
-                font-size: 0.8rem;
-            }
-            
-            h1 {
-                font-size: 1.5rem !important;
-            }
-            
-            h2 {
-                font-size: 1.1rem !important;
-            }
-            
-            .glass-header {
-                padding: 0.75rem 1rem;
-                margin-bottom: 1rem;
-                border-radius: 1rem;
-            }
-            
-            .global-refresh-btn {
-                padding: 0.375rem 0.875rem;
-                font-size: 0.8rem;
-            }
-            
-            .column-container {
-                gap: 0.5rem;
-            }
-            
-            .glass-card .grid-cols-2 {
-                gap: 0.25rem;
-            }
-            
-            .portfolio-footer {
-                padding: 0.75rem;
-                margin-top: 0.375rem;
-            }
-            
-            .portfolio-footer .text-xl {
-                font-size: 1.1rem;
-            }
-            
-            .bg-amber-100\/80 {
-                padding: 0.25rem 0.625rem;
-                font-size: 0.7rem;
-            }
-            
-            .glass-modal {
-                padding: 1.25rem;
-                margin: 0.75rem;
-            }
-            
-            .glass-modal h2 {
-                font-size: 1.25rem !important;
-            }
-            
-            .remove-button {
-                top: 0.5rem;
-                right: 0.5rem;
-                padding: 0.375rem;
-            }
-            
-            .glass-empty svg {
-                width: 28px;
-                height: 28px;
-            }
-            
-            .glass-empty span {
-                font-size: 0.7rem;
-            }
+            body { padding: 0.75rem; }
+            .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 0.625rem; }
+            .glass-card, .glass-empty { aspect-ratio: 1 / 1; min-height: auto; padding: 0.875rem; }
+            .glass-card .text-2xl { font-size: 1.25rem; }
+            .glass-card .text-sm { font-size: 0.7rem; }
+            .glass-card h3 { font-size: 0.8rem; }
+            h1 { font-size: 1.5rem !important; }
+            h2 { font-size: 1.1rem !important; }
+            .glass-header { padding: 0.75rem 1rem; margin-bottom: 1rem; border-radius: 1rem; }
+            .global-refresh-btn { padding: 0.375rem 0.875rem; font-size: 0.8rem; }
+            .column-container { gap: 0.5rem; }
+            .glass-card .grid-cols-2 { gap: 0.25rem; }
+            .portfolio-footer { padding: 0.75rem; margin-top: 0.375rem; }
+            .portfolio-footer .text-xl { font-size: 1.1rem; }
+            .bg-amber-100\/80 { padding: 0.25rem 0.625rem; font-size: 0.7rem; }
+            .glass-modal { padding: 1.25rem; margin: 0.75rem; }
+            .glass-modal h2 { font-size: 1.25rem !important; }
+            .remove-button { top: 0.5rem; right: 0.5rem; padding: 0.375rem; }
+            .glass-empty svg { width: 28px; height: 28px; }
+            .glass-empty span { font-size: 0.7rem; }
         }
-        
         @media (max-width: 380px) {
-            .cards-grid {
-                gap: 0.5rem;
-            }
-            
-            .glass-card, .glass-empty {
-                padding: 0.625rem;
-            }
-            
-            .glass-card .text-2xl {
-                font-size: 1.1rem;
-            }
-            
-            h1 {
-                font-size: 1.25rem !important;
-            }
+            .cards-grid { gap: 0.5rem; }
+            .glass-card, .glass-empty { padding: 0.625rem; }
+            .glass-card .text-2xl { font-size: 1.1rem; }
+            h1 { font-size: 1.25rem !important; }
+        }
+        .asset-badge {
+            display: inline-block;
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 0.1rem 0.4rem;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-left: 0.25rem;
         }
     </style>
 </head>
@@ -259,49 +180,129 @@
         (function(){
             "use strict";
 
-            // ---------- API Service ----------
+            // ---------- Service using Yahoo Finance (direct, no proxy) ----------
             const REFRESH_INTERVAL = 60000;
-            class StockApiService {
+            
+            class AssetService {
                 constructor() {
                     this.cache = new Map();
                     this.CACHE_TTL = 55000;
-                    // VERCEL WILL REPLACE THIS PLACEHOLDER WITH YOUR REAL KEY
-                    this.API_KEY = 'd7fuimpr01qqb8rhm7bgd7fuimpr01qqb8rhm7c0';
-                    this.BASE_URL = 'https://finnhub.io/api/v1';
                 }
-                async fetchStockData(symbol) {
+
+                _isCrypto(symbol) {
+                    const upper = symbol.toUpperCase();
+                    if (upper.includes('-USD')) return true;
+                    const cryptoSymbols = ['BTC', 'ETH', 'SOL', 'DOGE', 'XRP', 'ADA', 'DOT', 'MATIC', 'LINK', 'AVAX', 'SHIB', 'LTC', 'BCH', 'XLM', 'ATOM', 'UNI', 'ETC', 'ALGO', 'VET', 'ICP', 'FIL', 'XTZ', 'EOS', 'AAVE', 'GRT', 'MKR', 'SNX', 'COMP', 'ZEC', 'BAT', 'ZRX', 'ENJ', 'MANA', 'SAND', 'GALA', 'AXS'];
+                    return cryptoSymbols.includes(upper);
+                }
+
+                async _fetchCrypto(symbol) {
+                    let coinId = symbol.toLowerCase().replace('-usd', '');
+                    const map = { 
+                        'btc':'bitcoin', 'eth':'ethereum', 'sol':'solana', 'doge':'dogecoin', 
+                        'xrp':'ripple', 'ada':'cardano', 'dot':'polkadot', 'matic':'matic-network', 
+                        'link':'chainlink', 'avax':'avalanche-2', 'shib':'shiba-inu', 'ltc':'litecoin',
+                        'bch':'bitcoin-cash', 'xlm':'stellar', 'atom':'cosmos', 'uni':'uniswap',
+                        'etc':'ethereum-classic', 'algo':'algorand', 'vet':'vechain', 'icp':'internet-computer',
+                        'fil':'filecoin', 'xtz':'tezos', 'eos':'eos', 'aave':'aave', 'grt':'the-graph',
+                        'mkr':'maker', 'snx':'synthetix-network-token', 'comp':'compound-governance-token', 
+                        'zec':'zcash', 'bat':'basic-attention-token', 'zrx':'0x', 'enj':'enjincoin', 
+                        'mana':'decentraland', 'sand':'the-sandbox', 'gala':'gala', 'axs':'axie-infinity'
+                    };
+                    coinId = map[coinId] || coinId;
+                    
+                    const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true`);
+                    if (!res.ok) throw new Error('Crypto fetch failed');
+                    const json = await res.json();
+                    const data = json[coinId];
+                    if (!data || data.usd === undefined) throw new Error('Invalid crypto');
+                    
+                    const price = data.usd;
+                    const change24h = data.usd_24h_change || 0;
+                    const previousPrice = price - change24h;
+                    
+                    let name = symbol.toUpperCase();
+                    try {
+                        const infoRes = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
+                        if (infoRes.ok) {
+                            const info = await infoRes.json();
+                            name = info.name || symbol;
+                        }
+                    } catch {}
+                    
+                    return {
+                        symbol: symbol.toUpperCase(),
+                        name,
+                        price,
+                        previousPrice,
+                        lastUpdated: new Date(),
+                        assetType: 'crypto'
+                    };
+                }
+
+                async _fetchYahoo(symbol) {
+                    // Use Yahoo Finance query API
+                    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}`;
+                    const res = await fetch(url);
+                    if (!res.ok) throw new Error('Yahoo fetch failed');
+                    
+                    const data = await res.json();
+                    const chart = data.chart;
+                    if (!chart || !chart.result || chart.error) throw new Error('Invalid symbol');
+                    
+                    const result = chart.result[0];
+                    const meta = result.meta;
+                    
+                    const price = meta.regularMarketPrice;
+                    const previousClose = meta.chartPreviousClose || meta.previousClose || price;
+                    const name = meta.longName || meta.shortName || symbol;
+                    
+                    let assetType = 'stock';
+                    if (meta.instrumentType) {
+                        if (meta.instrumentType.includes('MUTUALFUND')) assetType = 'fund';
+                        else if (meta.instrumentType.includes('ETF')) assetType = 'etf';
+                    }
+                    
+                    return {
+                        symbol: symbol.toUpperCase(),
+                        name,
+                        price,
+                        previousPrice: previousClose,
+                        lastUpdated: new Date(),
+                        assetType
+                    };
+                }
+
+                async fetchAssetData(symbol) {
                     const upper = symbol.toUpperCase();
                     const cached = this.cache.get(upper);
                     if (cached && Date.now() - cached.timestamp < this.CACHE_TTL) return cached.data;
+
                     try {
-                        const quoteRes = await fetch(`${this.BASE_URL}/quote?symbol=${upper}&token=${this.API_KEY}`);
-                        if (!quoteRes.ok) throw new Error(`HTTP ${quoteRes.status}`);
-                        const quote = await quoteRes.json();
-                        if (quote.error || quote.c === undefined || quote.c === null) throw new Error('Invalid symbol');
-                        if (quote.c === 0 && quote.pc === 0 && quote.h === 0 && quote.l === 0) throw new Error('Symbol not recognized');
-                        
-                        const profileRes = await fetch(`${this.BASE_URL}/stock/profile2?symbol=${upper}&token=${this.API_KEY}`);
-                        let name = upper;
-                        if (profileRes.ok) {
-                            const prof = await profileRes.json();
-                            name = prof.name || upper;
+                        let data;
+                        if (this._isCrypto(upper)) {
+                            data = await this._fetchCrypto(upper);
+                        } else {
+                            data = await this._fetchYahoo(upper);
                         }
-                        const data = { symbol: upper, name, price: quote.c, previousPrice: quote.pc, lastUpdated: new Date() };
                         this.cache.set(upper, { data, timestamp: Date.now() });
                         return data;
                     } catch (e) {
                         if (cached) return cached.data;
-                        throw new Error(`"${symbol}" is not a recognized stock symbol`);
+                        throw new Error(`"${symbol}" not found. Check symbol.`);
                     }
                 }
+
                 async refreshMultiple(symbols, skipCache = false) {
                     if (skipCache) symbols.forEach(s => this.cache.delete(s.toUpperCase()));
-                    const results = await Promise.all(symbols.map(s => this.fetchStockData(s).catch(() => null)));
+                    const results = await Promise.all(symbols.map(s => this.fetchAssetData(s).catch(() => null)));
                     return results.filter(r => r !== null);
                 }
+
                 clearCache() { this.cache.clear(); }
             }
-            const stockApi = new StockApiService();
+
+            const assetApi = new AssetService();
 
             // ---------- State ----------
             let watchlist = [];
@@ -316,7 +317,6 @@
             let modal = { open: false, type: null };
             let previousPrices = new Map();
 
-            // ---------- Helpers ----------
             function getAllSymbols() {
                 const wSymbols = watchlist.map(s => s.symbol);
                 const pSymbols = portfolio.map(s => s.symbol);
@@ -337,21 +337,21 @@
                 
                 try {
                     watchlist.forEach(s => previousPrices.set(s.symbol, s.price));
-                portfolio.forEach(p => previousPrices.set(p.symbol, p.currentPrice ?? p.buyPrice));
+                    portfolio.forEach(p => previousPrices.set(p.symbol, p.currentPrice ?? p.buyPrice));
                     
-                    const updated = await stockApi.refreshMultiple(symbols, skipCache);
+                    const updated = await assetApi.refreshMultiple(symbols, skipCache);
                     const priceMap = new Map(updated.map(u => [u.symbol, u]));
                     
                     watchlist = watchlist.map(stock => {
                         const fresh = priceMap.get(stock.symbol);
-                        if (fresh) return { ...stock, price: fresh.price, previousPrice: fresh.previousPrice, name: fresh.name };
+                        if (fresh) return { ...stock, price: fresh.price, previousPrice: fresh.previousPrice, name: fresh.name, assetType: fresh.assetType };
                         return stock;
                     });
                     
                     portfolio = portfolio.map(item => {
                         const fresh = priceMap.get(item.symbol);
                         if (fresh) {
-                            return { ...item, currentPrice: fresh.price, previousPrice: fresh.previousPrice, name: fresh.name };
+                            return { ...item, currentPrice: fresh.price, previousPrice: fresh.previousPrice, name: fresh.name, assetType: fresh.assetType };
                         }
                         return item;
                     });
@@ -384,31 +384,30 @@
                 return { totalCost, totalValue, totalPL: totalValue - totalCost };
             }
 
-            // ---------- Rendering ----------
             function renderApp() {
                 const app = document.getElementById('app');
+                if (!app) return;
                 const stats = computePortfolioStats();
                 const filledWatch = watchlist.length;
                 const filledPort = portfolio.length;
                 
                 app.innerHTML = `
                     <div class="max-w-[1600px] mx-auto">
-                        ${renderHeader(filledWatch, filledPort, stats)}
+                        ${renderHeader(filledWatch, filledPort)}
                         <div class="dashboard-grid">
                             ${renderWatchlistColumn()}
                             ${renderPortfolioColumn(stats)}
                         </div>
-                        ${renderFooter()}
                         ${modal.open ? renderModal() : ''}
                     </div>
                 `;
             }
 
-            function renderHeader(wCount, pCount, stats) {
+            function renderHeader(wCount, pCount) {
                 return `
                     <header class="glass-header sticky top-0 z-20 mb-4 sm:mb-6 rounded-xl sm:rounded-2xl px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-2 sm:gap-3">
                         <div>
-                            <h1 class="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">Stock Manager</h1>
+                            <h1 class="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">📊 Multi‑Asset Manager</h1>
                             <p class="text-xs sm:text-sm text-gray-500 mt-0.5">Watchlist ${wCount} · Portfolio ${pCount}</p>
                         </div>
                         <div class="flex items-center gap-2 sm:gap-3">
@@ -429,7 +428,7 @@
                 return `
                     <div class="column-container">
                         <div class="flex items-center justify-between px-1">
-                            <h2 class="text-base sm:text-lg md:text-xl font-semibold text-gray-800">📋 Watchlist</h2>
+                            <h2 class="text-base sm:text-lg md:text-xl font-semibold text-gray-800">📈 Watchlist</h2>
                             <span class="text-xs sm:text-sm bg-white/50 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">${stocks.length}</span>
                         </div>
                         <div class="cards-grid">
@@ -446,13 +445,21 @@
                 const changePercent = stock.previousPrice ? (change / stock.previousPrice) * 100 : 0;
                 const direction = stock.price > prev ? 'up' : stock.price < prev ? 'down' : 'neutral';
                 const priceClass = direction === 'up' ? 'price-up' : direction === 'down' ? 'price-down' : 'price-neutral';
+                const assetType = stock.assetType || 'stock';
+                const badgeConfig = {
+                    'crypto': { text: '₿ CRYPTO', color: 'bg-orange-100 text-orange-700' },
+                    'fund': { text: '📈 FUND', color: 'bg-purple-100 text-purple-700' },
+                    'etf': { text: '📊 ETF', color: 'bg-blue-100 text-blue-700' },
+                    'stock': { text: '📈 STOCK', color: 'bg-gray-100 text-gray-700' }
+                };
+                const badge = badgeConfig[assetType] || badgeConfig.stock;
                 return `
-                    <div class="glass-card rounded-xl sm:rounded-2xl p-3 sm:p-4 relative group fade-in" data-watch-idx="${index}">
+                    <div class="glass-card rounded-xl sm:rounded-2xl p-3 sm:p-4 relative group fade-in">
                         <button onclick="window.handleRemoveWatchlist('${stock.symbol}')" class="remove-button absolute top-2 right-2 sm:top-3 sm:right-3 opacity-0 group-hover:opacity-100 transition p-1 sm:p-1.5 rounded-full hover:bg-gray-100/50">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
                         </button>
                         <div class="pr-5 sm:pr-6">
-                            <h3 class="font-semibold text-gray-900 truncate text-sm sm:text-base">${stock.name}</h3>
+                            <h3 class="font-semibold text-gray-900 truncate text-sm sm:text-base">${stock.name} <span class="asset-badge ${badge.color}">${badge.text}</span></h3>
                             <p class="text-xs sm:text-sm text-gray-500">${stock.symbol}</p>
                         </div>
                         <div class="mt-2 sm:mt-3">
@@ -470,7 +477,7 @@
                     <button onclick="window.openModal('watchlist')" class="glass-empty rounded-xl sm:rounded-2xl w-full min-h-[140px] sm:min-h-[160px] flex items-center justify-center group">
                         <div class="flex flex-col items-center gap-1.5 sm:gap-2">
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="text-gray-400 group-hover:text-blue-500"><path d="M12 5v14M5 12h14"/></svg>
-                            <span class="text-xs sm:text-sm font-medium text-gray-600">Add</span>
+                            <span class="text-xs sm:text-sm font-medium text-gray-600">Add Asset</span>
                         </div>
                     </button>
                 `;
@@ -501,13 +508,21 @@
                 const plPercent = buy ? ((curr - buy) / buy) * 100 : 0;
                 const value = curr * qty;
                 const plClass = pl >= 0 ? 'text-green-600' : 'text-red-600';
+                const assetType = item.assetType || 'stock';
+                const badgeConfig = {
+                    'crypto': { text: '₿ CRYPTO', color: 'bg-orange-100 text-orange-700' },
+                    'fund': { text: '📈 FUND', color: 'bg-purple-100 text-purple-700' },
+                    'etf': { text: '📊 ETF', color: 'bg-blue-100 text-blue-700' },
+                    'stock': { text: '📈 STOCK', color: 'bg-gray-100 text-gray-700' }
+                };
+                const badge = badgeConfig[assetType] || badgeConfig.stock;
                 return `
-                    <div class="glass-card rounded-xl sm:rounded-2xl p-3 sm:p-4 relative group fade-in" data-port-idx="${index}">
+                    <div class="glass-card rounded-xl sm:rounded-2xl p-3 sm:p-4 relative group fade-in">
                         <button onclick="window.handleRemovePortfolio('${item.symbol}')" class="remove-button absolute top-2 right-2 sm:top-3 sm:right-3 opacity-0 group-hover:opacity-100 transition p-1 sm:p-1.5 rounded-full hover:bg-gray-100/50">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
                         </button>
                         <div class="pr-4 sm:pr-5">
-                            <h3 class="font-semibold text-gray-900 truncate text-sm sm:text-base">${item.name}</h3>
+                            <h3 class="font-semibold text-gray-900 truncate text-sm sm:text-base">${item.name} <span class="asset-badge ${badge.color}">${badge.text}</span></h3>
                             <p class="text-xs sm:text-sm text-gray-500">${item.symbol} · ${qty}</p>
                         </div>
                         <div class="mt-2 sm:mt-3 grid grid-cols-2 gap-0.5 sm:gap-1 text-xs sm:text-sm">
@@ -529,7 +544,7 @@
                     <button onclick="window.openModal('portfolio')" class="glass-empty rounded-xl sm:rounded-2xl w-full min-h-[140px] sm:min-h-[160px] flex items-center justify-center group">
                         <div class="flex flex-col items-center gap-1.5 sm:gap-2">
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="text-gray-400 group-hover:text-emerald-500"><path d="M12 5v14M5 12h14"/></svg>
-                            <span class="text-xs sm:text-sm font-medium text-gray-600">Add</span>
+                            <span class="text-xs sm:text-sm font-medium text-gray-600">Add Holding</span>
                         </div>
                     </button>
                 `;
@@ -552,8 +567,6 @@
                 `;
             }
 
-            function renderFooter() { return ""; }
-
             function renderModal() {
                 const isWatch = modal.type === 'watchlist';
                 return `
@@ -566,8 +579,9 @@
                             <form onsubmit="window.handleAddSubmit(event, '${modal.type}')">
                                 <div class="space-y-3 sm:space-y-4">
                                     <div>
-                                        <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">Ticker Symbol</label>
-                                        <input type="text" id="modal-symbol" class="glass-input w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-sm sm:text-base uppercase" autocomplete="off" required>
+                                        <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">Symbol</label>
+                                        <input type="text" id="modal-symbol" class="glass-input w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-sm sm:text-base uppercase" autocomplete="off" placeholder="AAPL, BTC, VFIAX, SPY..." required>
+                                        <p class="text-xs text-gray-400 mt-1">Stocks, ETFs, mutual funds, or crypto</p>
                                     </div>
                                     ${!isWatch ? `
                                         <div class="grid grid-cols-2 gap-2 sm:gap-3">
@@ -577,7 +591,7 @@
                                             </div>
                                             <div>
                                                 <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">Quantity</label>
-                                                <input type="number" step="any" min="0.001" id="modal-qty" class="glass-input w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-sm sm:text-base" required>
+                                                <input type="number" step="any" min="0.000001" id="modal-qty" class="glass-input w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-sm sm:text-base" required>
                                             </div>
                                         </div>
                                     ` : ''}
@@ -614,11 +628,11 @@
                 submitBtn.textContent = 'Checking...';
                 
                 try {
-                    const stockData = await stockApi.fetchStockData(symbol);
+                    const assetData = await assetApi.fetchAssetData(symbol);
                     if (type === 'watchlist') {
                         if (watchlist.some(s => s.symbol === symbol)) throw new Error('Already in watchlist');
-                        watchlist.push({ ...stockData });
-                        previousPrices.set(symbol, stockData.price);
+                        watchlist.push({ ...assetData });
+                        previousPrices.set(symbol, assetData.price);
                     } else {
                         const buyPrice = parseFloat(document.getElementById('modal-buy').value);
                         const quantity = parseFloat(document.getElementById('modal-qty').value);
@@ -627,11 +641,12 @@
                         if (portfolio.some(p => p.symbol === symbol)) throw new Error('Holding already exists');
                         
                         portfolio.push({
-                            symbol: stockData.symbol,
-                            name: stockData.name,
+                            symbol: assetData.symbol,
+                            name: assetData.name,
+                            assetType: assetData.assetType,
                             buyPrice, quantity,
-                            currentPrice: stockData.price,
-                            previousPrice: stockData.previousPrice
+                            currentPrice: assetData.price,
+                            previousPrice: assetData.previousPrice
                         });
                     }
                     saveToStorage();
@@ -670,43 +685,43 @@
                     btn.querySelector('.btn-text').textContent = 'Refreshing...';
                     btn.querySelector('.refresh-icon')?.classList.add('animate-spin');
                 }
-                stockApi.clearCache();
+                assetApi.clearCache();
                 await smoothRefreshAll(true);
             };
 
             // ---------- Storage ----------
             function saveToStorage() {
-                localStorage.setItem('unified_watchlist', JSON.stringify(watchlist.map(s => ({ symbol: s.symbol, name: s.name }))));
-                localStorage.setItem('unified_portfolio', JSON.stringify(portfolio.map(p => ({
-                    symbol: p.symbol, name: p.name, buyPrice: p.buyPrice, quantity: p.quantity
+                localStorage.setItem('multi_watchlist', JSON.stringify(watchlist.map(s => ({ symbol: s.symbol, name: s.name, assetType: s.assetType }))));
+                localStorage.setItem('multi_portfolio', JSON.stringify(portfolio.map(p => ({
+                    symbol: p.symbol, name: p.name, assetType: p.assetType, buyPrice: p.buyPrice, quantity: p.quantity
                 }))));
             }
             
             async function loadFromStorage() {
                 try {
-                    const wSaved = localStorage.getItem('unified_watchlist');
-                    const pSaved = localStorage.getItem('unified_portfolio');
+                    const wSaved = localStorage.getItem('multi_watchlist');
+                    const pSaved = localStorage.getItem('multi_portfolio');
                     if (wSaved) {
                         const wList = JSON.parse(wSaved);
                         for (let item of wList) {
                             try {
-                                const data = await stockApi.fetchStockData(item.symbol);
+                                const data = await assetApi.fetchAssetData(item.symbol);
                                 watchlist.push(data);
                                 previousPrices.set(data.symbol, data.price);
-                            } catch (e) { }
+                            } catch (e) { console.warn(`Failed to load ${item.symbol}`); }
                         }
                     }
                     if (pSaved) {
                         const pList = JSON.parse(pSaved);
                         for (let item of pList) {
                             try {
-                                const data = await stockApi.fetchStockData(item.symbol);
+                                const data = await assetApi.fetchAssetData(item.symbol);
                                 portfolio.push({
-                                    symbol: data.symbol, name: data.name,
+                                    symbol: data.symbol, name: data.name, assetType: data.assetType,
                                     buyPrice: item.buyPrice, quantity: item.quantity,
                                     currentPrice: data.price, previousPrice: data.previousPrice
                                 });
-                            } catch (e) { }
+                            } catch (e) { console.warn(`Failed to load portfolio ${item.symbol}`); }
                         }
                     }
                 } catch (e) { localStorage.clear(); }
